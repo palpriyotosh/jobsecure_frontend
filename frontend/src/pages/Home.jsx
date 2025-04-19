@@ -1,6 +1,19 @@
-import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext'; // adjust path if needed
 
 const Home = () => {
+  const { isLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleNavigation = (path) => {
+    if (isLoggedIn) {
+      navigate(path);
+    } else {
+      navigate('/login');
+    }
+  };
+
   return (
     <div className="min-h-screen pt-20 bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto px-6 py-16">
@@ -13,20 +26,20 @@ const Home = () => {
             scam-free environment.
           </p>
           <div className="flex justify-center space-x-6">
-            <Link
-              to="/freelancer-dashboard"
+            <button
+              onClick={() => handleNavigation('/freelancer-dashboard')}
               className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transform transition-all duration-200 hover:scale-105 shadow-lg"
             >
               Find Work
-            </Link>
-            <Link
-              to="/employer-dashboard"
+            </button>
+            <button
+              onClick={() => handleNavigation('/employer-dashboard')}
               className="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold border-2 border-blue-600 hover:bg-blue-50 transform transition-all duration-200 hover:scale-105 shadow-lg"
             >
               Post a Job
-            </Link>
+            </button>
           </div>
-          
+
           <div className="mt-16 grid grid-cols-3 gap-8 max-w-3xl mx-auto text-center">
             <div className="p-6">
               <div className="text-blue-600 text-4xl mb-4">🛡️</div>
